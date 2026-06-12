@@ -216,3 +216,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+paper.md
+# CORA local runtime artifacts
+/data/
+/results/
+/experiments/
+/models/
+/models_third_party/
+/checkpoints/
+/analysis_output/
+/outputs/
+/wandb/
+/mlruns/
+*.ckpt
+*.pt
+*.pth
+*.safetensors

@@ -1,0 +1,60 @@
+# CORA public experiment configuration.
+#
+# Data setup downloads only the Hugging Face test split from msnowchanj/CORA.
+# Model code and checkpoints are not downloaded by this repository; prepare
+# them manually and point the paths below at your local copies.
+
+models:
+  - name: "laion"
+    type: "transformers_local"
+    model_path: "models/laion-clap-htsat-unfused"
+    local_files_only: true
+    enabled: true
+
+  - name: "mga"
+    type: "local"
+    repo_path: "models_third_party/MGA-CLAP"
+    checkpoint_path: "models/mga/mga-clap.pt"
+    enabled: true
+
+  - name: "msclap"
+    type: "local"
+    package: "msclap"
+    version: "2023"
+    checkpoint_path: "models/msclap/msclap_2023.pt"
+    enabled: true
+
+  - name: "m2d"
+    type: "local"
+    repo_path: "models_third_party/m2d"
+    checkpoint_path: "models/m2d/checkpoint-30.pth"
+    enabled: true
+
+external_retrievers:
+  oea_qwen3b_cl:
+    repo_path: "models_third_party/Omni-Embed-Audio"
+    base_model_path: "models/oea/OEA-Qwen3B-Cl/base_model"
+    checkpoint_path: "models/oea/OEA-Qwen3B-Cl/checkpoint.pt"
+  oea_qwen3b_ac:
+    repo_path: "models_third_party/Omni-Embed-Audio"
+    base_model_path: "models/oea/OEA-Qwen3B-AC/base_model"
+    checkpoint_path: "models/oea/OEA-Qwen3B-AC/checkpoint.pt"
+  robustclap:
+    repo_path: "models_third_party/linguistic_robust_clap"
+    checkpoint_path: "models/robustclap/630k-audioset-best.pt"
+
+datasets:
+  hf_dataset: "msnowchanj/CORA"
+  split: "test"
+  cora_jsonl: "data/cora/test/eq_by_clip.jsonl"
+  audio_dir: "data/cora/test/audio"
+  query_types: ["key_phrase", "statement", "question", "command", "indirect"]
+  source_caption_key: "source_caption"
+
+runtime:
+  base_cache_dir: "results/eq_renew/vanilla_multiclap_eq_embedding_cache"
+  source_cache_dir: "results/eq_renew/single_model_invariance_embedding_cache"
+  external_cache_root: "results/eq_renew/external_retriever_embedding_cache"
+  experiment_dir: "experiments"
+  device: "cuda"
+  batch_size: 16
